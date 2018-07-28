@@ -1,0 +1,124 @@
+.nav ul { /* bootstrap reset */
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-left: 0;
+}
+
+.toggleMenu {
+    display:  none;
+    padding: 10px 15px;
+}
+.nav {
+    list-style: none;
+     *zoom: 1;
+}
+.nav:before,
+.nav:after {
+    content: " "; 
+    display: table; 
+}
+.nav:after {
+    clear: both;
+}
+.nav ul {
+    list-style: none;
+}
+.nav li {
+    position: relative;
+}
+.nav > li {
+    display: inline-block;
+}
+.nav > li > .parent {
+/*    background-repeat: no-repeat;
+    background-position: right;*/
+}
+.nav > li > a {
+    display: block;
+}
+.nav li  ul {
+    position: absolute;
+    left: -9999px;
+	background-color: rgba(4,32,61,.95);
+	background: url('/web/20180226080721im_/http://uscyberpatriot.org/Style Library/CyberPatriot/img/bg-darkBlue-95.png') repeat;
+	border: 1px solid rgba(255,255,255,.35);
+	z-index: 999;
+	width: 250px;
+	border-radius: 10px;
+}
+.nav > li.hover > ul {
+    left: 0;
+}
+.nav li li.hover ul {
+    left: 100%;
+    top: 0;
+}
+.nav li li a { /* dropdown style */
+    display: block;
+	padding: 10px 10px;
+    position: relative;
+    z-index:100;
+	color: #fff;
+	text-align: left;
+	border-top: 1px solid rgba(255,255,255,.15);
+}
+.nav li li:first-child a {
+	border-top: 0;
+}
+.nav li li li a {
+    z-index:200;
+}
+
+@media screen and (max-width: 992px) {
+    .active {display: block;}
+	.nav li li a {text-align:center;}
+    .nav > li {display: block;}
+    .nav > li > .parent {background-position: 95% 50%;}
+    .nav li li .parent {
+        background-image: url("/web/20180226080721im_/http://uscyberpatriot.org/Style Library/CyberPatriot/css/images/downArrow.png");
+        background-repeat: no-repeat;
+        background-position: 95% 50%;
+    }
+    .nav ul {display: block; width: 100%;}
+	
+	.nav li ul {
+		width: 100%;
+		border-radius: 10px;
+	}
+	
+   .nav > li.hover > ul , .nav li li.hover ul {
+        position: static;
+    }
+
+    .toggleMenu {
+    text-align: center;
+    display:block !important;
+    font-size: 13px;
+    color: #fff;
+    text-transform:uppercase;
+    font-family: 'Roboto', sans-serif;
+	font-weight:700;
+}
+
+}
+/*
+     FILE ARCHIVED ON 08:07:21 Feb 26, 2018 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:02:41 Jul 28, 2018.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  LoadShardBlock: 77.066 (3)
+  esindex: 0.006
+  captures_list: 106.567
+  CDXLines.iter: 11.657 (3)
+  PetaboxLoader3.datanode: 158.935 (5)
+  exclusion.robots: 0.163
+  exclusion.robots.policy: 0.153
+  RedisCDXSource: 11.919
+  PetaboxLoader3.resolve: 117.093 (2)
+  load_resource: 233.41
+*/

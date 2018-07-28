@@ -1,0 +1,75 @@
+﻿@media (min-width: 1200px) {
+}
+
+@media (max-width: 979px) {
+    table thead tr th:nth-child(5) {
+        display: none;
+    }
+
+    table tbody tr td:nth-child(5) {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+}
+
+
+    @media (max-width: 479px) {
+        table.ms-listviewtable > tbody > tr {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 479px) {
+        table.ms-listviewtable > tbody > tr {
+            padding: 10px;
+        }
+
+            table.ms-listviewtable > tbody > tr > td {
+                display: block;
+                text-align: left;
+                border: none!important;
+                width: 100%; /* IE8 */
+                float: left; /* IE8 */
+            }
+
+        /*table.ms-listviewtable > tbody > tr > td.ms-vb2 > a {
+		font-size: 1.2em;
+		font-weight: bold;
+	}*/
+
+        table.ms-listviewtable tr.s4-itm-hover > td, table.ms-listviewtable tr.ms-itmhover:hover > td, tr.s4-itm-selected > td, tr.s4-itm-selected:hover > td {
+            border: none;
+        }
+
+        table.ms-listviewtable .ms-viewheadertr, table.ms-listviewtable tbody tr td.ms-vb-firstCell {
+            display: none;
+        }
+
+        td.ms-list-itemLink-td.ms-cellstyle, img.ms-newdocument-icon {
+            display: none;
+        }
+    }
+
+/*
+     FILE ARCHIVED ON 08:07:20 Feb 26, 2018 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:02:41 Jul 28, 2018.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  LoadShardBlock: 136.602 (3)
+  esindex: 0.005
+  captures_list: 168.481
+  CDXLines.iter: 10.064 (3)
+  PetaboxLoader3.datanode: 216.654 (5)
+  exclusion.robots: 0.14
+  exclusion.robots.policy: 0.129
+  RedisCDXSource: 17.811
+  PetaboxLoader3.resolve: 133.054 (2)
+  load_resource: 273.447
+*/
