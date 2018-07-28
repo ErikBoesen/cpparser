@@ -23,3 +23,12 @@ for row in rows:
     else:
         teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
 
+if args.teams:
+    teams = list(filter(lambda x: x['Team #'] in args.teams, teams))
+
+relevant = ['CCS Images ', 'Cisco Networking ', 'Cumulative Score']
+for team in teams:
+    print('Team {number}:'.format(number=team['Team #']))
+    for field in relevant:
+        print('\t{title}: {value}'.format(title=field,
+                                        value=team[field]))
