@@ -8,12 +8,13 @@ URL = 'http://www.uscyberpatriot.org/competition/current-competition/scores'
 
 #raw = requests.get(URL).content
 raw = open('test_data/Scores.html').read()
+# BeautifulSoup is actually a god-breathed piece of software
+# Also it's 22:48 right now
+# Send help
 soup = BeautifulSoup(raw, 'html.parser')
-rounds = []
 main_list = soup.find('ul', class_='dfwp-column dfwp-list')
-print(len(main_list.find_all('li', class_='dfwp-item', recursive=False)))
-for rnd in main_list.find_all('li', class_='dfwp-item', recursive=False):
-    title = rnd.find('div', class_='groupheader item medium').text
-    for lnk in rnd.find_all('a'):
-        print('{name} /// {url}'.format(name=lnk.text, url=lnk['href']))
-    print('-=' * 40)
+rounds = {
+    rnd.find('div', class_='groupheader item medium').text: {
+        lnk.text: lnk['href'] for lnk in rnd.find_all('a')
+    } for rnd in main_list.find_all('li', class_='dfwp-item', recursive=False)
+}
