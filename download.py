@@ -2,7 +2,7 @@
 
 import requests
 from bs4 import BeautifulSoup
-import argparse
+from pick import pick
 
 URL = 'http://www.uscyberpatriot.org/competition/current-competition/scores'
 
@@ -18,3 +18,7 @@ rounds = {
         lnk.text: lnk['href'] for lnk in rnd.find_all('a')
     } for rnd in main_list.find_all('li', class_='dfwp-item', recursive=False)
 }
+
+rnd = pick(list(rounds.keys()), title='Pick a round to get data on.')[0]
+div = pick(list(rounds[rnd].keys()), title='Pick a division to get data on.')[0]
+print(rounds[rnd][div])
