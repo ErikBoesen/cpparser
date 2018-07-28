@@ -6,6 +6,8 @@ import argparse
 parser = argparse.ArgumentParser(description='extract important information from CyberPatriot score dumps.')
 parser.add_argument('file', help='name of/path to spreadsheet for parsing (typically in XLSX format)')
 parser.add_argument('--teams', dest='teams', nargs='+', help='names of teams to focus on')
+# TODO: Implement CSV support
+#parser.add_argument('--csv', dest='csv', help='output data in CSV format')
 args = parser.parse_args()
 
 wb = load_workbook(filename=args.file, read_only=True)
@@ -27,7 +29,7 @@ for row in rows:
         teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
 
 if args.teams:
-    teams = list(filter(lambda x: x['Team #'] in args.teams, teams))
+    teams = list(filter(lambda team: team['Team #'] in args.teams, teams))
 
 relevant = ['CCS Images ', 'Cisco Networking ', 'Cumulative Score']
 for team in teams:
@@ -35,3 +37,5 @@ for team in teams:
     for field in relevant:
         print('\t{title}: {value}'.format(title=clean(field),
                                           value=team[field]))
+
+# TODO: Currently ignores rankings.
