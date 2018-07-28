@@ -13,7 +13,18 @@ ws = wb.active
 
 rows = ws.rows
 
+fields = []
+data_reached = False
+data = []
 for row in rows:
-    for cell in row:  # row is a tuple
-        print(cell.value, end='\t | ')
-    print()
+    if not data_reached:
+        if row[0].value == 'Team #':
+            # This is the header row
+            for cell in row:
+                fields.append(cell.value)
+            data_reached = True
+    else:
+        team = {fields[col]: cell.value for col, cell in enumerate(row)}
+
+print(fields)
+print(data)
