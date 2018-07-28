@@ -13,6 +13,9 @@ ws = wb.active
 
 rows = ws.rows
 
+def clean(string: str) -> str:
+    return string[:-1] if string[-1] == ' ' else string
+
 fields = []
 teams = []
 for row in rows:
@@ -30,5 +33,5 @@ relevant = ['CCS Images ', 'Cisco Networking ', 'Cumulative Score']
 for team in teams:
     print('Team {number}:'.format(number=team['Team #']))
     for field in relevant:
-        print('\t{title}: {value}'.format(title=field,
-                                        value=team[field]))
+        print('\t{title}: {value}'.format(title=clean(field),
+                                          value=team[field]))
