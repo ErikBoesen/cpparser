@@ -20,9 +20,9 @@ rounds = {
 
 chosen_round    = pick(list(rounds.keys()), title='Pick a round to get data on.')[0]
 chosen_division = pick(list(rounds[chosen_round].keys()), title='Pick a division to get data on.')[0]
-# TODO: Asegurar que no sea de forma PDF
 uri = rounds[chosen_round][chosen_division]
-# TODO: There's likely a better way (read: an existing method) to remove the space escape codes.
 spreadsheet = OUTPUT_DIR + unquote(uri.split('/')[-1])
-print('Saving {file} (from {uri})'.format(file=spreadsheet, uri=uri))
+
+print('URI: ' + uri)
+print('Output: ' + spreadsheet)
 open(spreadsheet, 'wb').write(requests.get(uri).content)
