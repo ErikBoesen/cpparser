@@ -28,6 +28,8 @@ for row in rows:
     else:
         teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
 
+# Remove None teams
+teams = list(filter(lambda team: team['Team #'] is not None, teams))
 if args.teams:
     teams = list(filter(lambda team: team['Team #'] in args.teams, teams))
 
