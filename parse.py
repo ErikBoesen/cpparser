@@ -10,7 +10,7 @@ parser.add_argument('--teams', dest='teams', nargs='+', help='names of teams to 
 #parser.add_argument('--csv', dest='csv', help='output data in CSV format')
 args = parser.parse_args()
 
-wb = load_workbook(filename=args.file, read_only=True)
+wb = load_workbook(filename=args.file, read_only=True, data_only=True)
 ws = wb.active
 
 rows = ws.rows
