@@ -24,6 +24,4 @@ url = rounds[chosen_round][chosen_division]
 # TODO: There's likely a better way (read: an existing method) to remove the space escape codes.
 spreadsheet = OUTPUT_DIR + url.split('/')[-1].replace('%20', ' ')
 print('Saving ' + spreadsheet)
-# TODO: Check if requests has a better method for downloading files
-with open(spreadsheet, 'w') as f:
-    f.write(requests.get(url).content.decode())
+open(spreadsheet, 'wb').write(requests.get(url).content)
