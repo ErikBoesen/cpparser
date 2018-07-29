@@ -24,20 +24,19 @@ for row in rows:
     if not fields:  # if fields have not yet been determined
         if row[0].value == 'Team #':
             # This is the header row
-            fields = [cell.value for cell in row]
-    else:
+            fields = [clean(cell.value) for cell in row]
+    elif row[0].value is not None:
         teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
 
-# Remove None teams
-teams = list(filter(lambda team: team['Team #'] is not None, teams))
 if args.teams:
     teams = list(filter(lambda team: team['Team #'] in args.teams, teams))
 
-relevant = ['CCS Images ', 'Cisco Networking ', 'Cumulative Score']
+irrelevant = ['Team #', 'Division', 'Location']
 for team in teams:
     print('Team {number}:'.format(number=team['Team #']))
-    for field in relevant:
-        print('\t{title}: {value}'.format(title=clean(field),
-                                          value=team[field]))
+    for field in fields:
+        if field not in irrelevant:
+            print('\t{title}: {value}'.format(title=field,
+                                              value=team.get(field)))
 
 # TODO: Currently ignores rankings.
