@@ -35,3 +35,6 @@ All fields provided by the spreadsheet will be shown except those specifically e
 python3 parse.py spreadsheet_path.xlsx --teams 10-1018 10-1418 #...
 ```
 You should add all teams on which you wish to get data following `--teams`.
+
+## Licensing & Authorship
+This software was created by [Erik Boesen](https://github.com/ErikBoesen) and is provided under the [MIT License](LICENSE).
