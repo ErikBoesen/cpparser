@@ -2,6 +2,7 @@
 
 from openpyxl import load_workbook
 import argparse
+import json
 
 parser = argparse.ArgumentParser(description='extract important information from CyberPatriot score dumps.')
 parser.add_argument('file', help='name of/path to spreadsheet for parsing (typically in XLSX format)')
@@ -31,9 +32,15 @@ for row in rows:
 if args.teams:
     teams = list(filter(lambda team: team['Team #'] in args.teams, teams))
 
+with open('team_names.json', 'r') as f:
+    team_names = json.load(f)
+
 irrelevant = ['Team #', 'Division', 'Location']
 for team in teams:
-    print('Team {number}:'.format(number=team['Team #']))
+    number = team['Team #']
+    name = team_names.get(number)
+    print('Team {number}{name}:'.format(number=number,
+                                  name=', ' + name if name else ''))
     for field in fields:
         if field not in irrelevant:
             print('\t{title}: {value}'.format(title=field,
