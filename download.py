@@ -8,6 +8,7 @@ from urllib.parse import unquote
 SCORE_PAGE = 'http://www.uscyberpatriot.org/competition/current-competition/scores'
 OUTPUT_DIR = '/tmp/'
 
+# TODO: NO DEBUG
 #page = requests.get(SOURCE).content
 page = open('test_data/Scores.html').read()
 soup = BeautifulSoup(page, 'html.parser')
