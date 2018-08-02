@@ -30,20 +30,32 @@ for row in rows:
         teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
 
 if args.teams:
-    teams = list(filter(lambda team: team['Team #'] in args.teams, teams))
+    select_teams = list(filter(lambda team: team['Team #'] in args.teams, teams))
+else:
+    select_teams = teams
+
+# Filter out teams with scores "Withheld" and similar messages.
+world_teams = list(filter(lambda team: type(team['Cumulative Score']) in (int, float), teams))
+# Sort in order of total score.
+world_teams = sorted(world_teams, key=lambda team: team['Cumulative Score'], reverse=True)
+print([team['Cumulative Score'] for team in world_teams])
 
 with open('team_names.json', 'r') as f:
     team_names = json.load(f)
 
 irrelevant = ['Team #', 'Division', 'Location']
-for team in teams:
+for team in select_teams:
     number = team['Team #']
     name = team_names.get(number)
     print('Team {number}{name}:'.format(number=number,
-                                  name=', ' + name if name else ''))
+                                        name=', ' + name if name else ''))
     for field in fields:
         if field not in irrelevant:
             print('\t{title}: {value}'.format(title=field,
                                               value=team.get(field)))
+    # TODO: Oh god this is inefficient.
+    #state_teams = list(sorted(list(filter(lambda opponent: team['Location'] == opponent['Location'], teams)), key='Cumulative Score'))
+    #print('\tWorld Rank: {world_rank}'.format(world_rank=world_teams.index(team)))  # TODO: Test
+    #print('\tState Rank: {state_rank}'.format(state_rank=state_teams.index(team)))  # TODO: Same
 
 # TODO: Currently ignores rankings.
