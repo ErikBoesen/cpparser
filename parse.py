@@ -55,7 +55,7 @@ for team in select_teams:
     # TODO: Improve efficiency.
     state_teams = [opponent for opponent in world_teams if opponent['Location'] == team['Location']]
     #state_teams = list(filterambda opponent: team['Location'] == opponent['Location'], world_teams))
-    print('\tWorld Rank: #{world_rank}'.format(world_rank=world_teams.index(team)))
-    print('\tState Rank: #{state_rank}'.format(state_rank=state_teams.index(team)))
+    print('\tWorld Rank: #{world_rank}'.format(world_rank=world_teams.index(team) + 1))
+    print('\tState Rank: #{state_rank}'.format(state_rank=state_teams.index(team) + 1))
 
 # TODO: Currently ignores rankings.
