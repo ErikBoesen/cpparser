@@ -31,14 +31,13 @@ for row in rows:
 
 # Filter out teams with scores "Withheld" and similar messages.
 teams = list(filter(lambda team: type(team['Cumulative Score']) in (int, float), teams))
+# Sort in order of total score.
+teams = sorted(teams, key=lambda team: team['Cumulative Score'], reverse=True)
 
 if args.teams:
     select_teams = list(filter(lambda team: team['Team #'] in args.teams, teams))
 else:
     select_teams = teams
-
-# Sort in order of total score.
-world_teams = sorted(teams, key=lambda team: team['Cumulative Score'], reverse=True)
 
 with open('team_names.json', 'r') as f:
     team_names = json.load(f)
@@ -54,6 +53,6 @@ for team in select_teams:
             print('\t{title}: {value}'.format(title=field,
                                               value=team.get(field)))
     # TODO: Improve efficiency.
-    state_teams = [opponent for opponent in world_teams if opponent['Location'] == team['Location']]
-    print('\tWorld Rank: #{world_rank} out of {world_total} teams'.format(world_rank=world_teams.index(team) + 1, world_total=len(world_teams)))
-    print('\tState Rank: #{state_rank} out of {state_total} teams'.format(state_rank=state_teams.index(team) + 1, state_total=len(state_teams)))
+    state_teams = [opponent for opponent in teams if opponent['Location'] == team['Location']]
+    print('\tWorld Rank: #{rank} of {total} teams'.format(rank=teams.index(team) + 1, total=len(teams)))
+    print('\tState Rank: #{state_rank} of {state_total} teams'.format(state_rank=state_teams.index(team) + 1, state_total=len(state_teams)))
