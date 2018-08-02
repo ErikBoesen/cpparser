@@ -30,14 +30,12 @@ for row in rows:
         teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
 
 # Filter out teams with scores "Withheld" and similar messages.
-teams = list(filter(lambda team: type(team['Cumulative Score']) in (int, float), teams))
+teams = [team for team in teams if type(team['Cumulative Score']) in (int, float)]
 # Sort in order of total score.
-teams = sorted(teams, key=lambda team: team['Cumulative Score'], reverse=True)
+teams.sort(key=lambda team: team['Cumulative Score'], reverse=True)
 
-if args.teams:
-    select_teams = list(filter(lambda team: team['Team #'] in args.teams, teams))
-else:
-    select_teams = teams
+# Create a list of teams on which we desire to log data
+select_teams = [team for team in team if team['Team #'] in args.teams] if args.teams else teams
 
 with open('team_names.json', 'r') as f:
     team_names = json.load(f)
