@@ -52,9 +52,10 @@ for team in select_teams:
         if field not in irrelevant:
             print('\t{title}: {value}'.format(title=field,
                                               value=team.get(field)))
-    # TODO: Oh god this is inefficient.
-    #state_teams = list(sorted(list(filter(lambda opponent: team['Location'] == opponent['Location'], teams)), key='Cumulative Score'))
-    print('\tWorld Rank: {world_rank}'.format(world_rank=world_teams.index(team)))
-    #print('\tState Rank: {state_rank}'.format(state_rank=state_teams.index(team)))  # TODO: Same
+    # TODO: Improve efficiency.
+    state_teams = [opponent for opponent in world_teams if opponent['Location'] == team['Location']]
+    #state_teams = list(filterambda opponent: team['Location'] == opponent['Location'], world_teams))
+    print('\tWorld Rank: #{world_rank}'.format(world_rank=world_teams.index(team)))
+    print('\tState Rank: #{state_rank}'.format(state_rank=state_teams.index(team)))
 
 # TODO: Currently ignores rankings.
