@@ -29,15 +29,16 @@ for row in rows:
     elif row[0].value is not None:
         teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
 
+# Filter out teams with scores "Withheld" and similar messages.
+teams = list(filter(lambda team: type(team['Cumulative Score']) in (int, float), teams))
+
 if args.teams:
     select_teams = list(filter(lambda team: team['Team #'] in args.teams, teams))
 else:
     select_teams = teams
 
-# Filter out teams with scores "Withheld" and similar messages.
-world_teams = list(filter(lambda team: type(team['Cumulative Score']) in (int, float), teams))
 # Sort in order of total score.
-world_teams = sorted(world_teams, key=lambda team: team['Cumulative Score'], reverse=True)
+world_teams = sorted(teams, key=lambda team: team['Cumulative Score'], reverse=True)
 
 with open('team_names.json', 'r') as f:
     team_names = json.load(f)
