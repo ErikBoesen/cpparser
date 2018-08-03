@@ -33,7 +33,7 @@ teams = [team for team in teams if type(team['Cumulative Score']) in (int, float
 teams.sort(key=lambda team: team['Cumulative Score'], reverse=True)
 
 # Create a list of teams on which we desire to log data
-select_teams = [team for team in team if team['Team #'] in args.teams] if args.teams else teams
+select_teams = [team for team in teams if team['Team #'] in args.teams] if args.teams else teams
 
 with open('team_names.json', 'r') as f:
     team_names = json.load(f)
@@ -46,8 +46,9 @@ for team in select_teams:
                                         name=', ' + name if name else ''))
     for field in fields:
         if field not in irrelevant:
+            value = team.get(field)
             print('\t{title}: {value}'.format(title=field,
-                                              value=team.get(field)))
+                                              value=round(value, 8) if type(value) == float else value))
     # TODO: Improve efficiency.
     state_teams = [opponent for opponent in teams if opponent['Location'] == team['Location']]
     print('\tWorld Rank: #{rank} of {total} teams'.format(rank=teams.index(team) + 1, total=len(teams)))
