@@ -43,6 +43,7 @@ select_teams = [team for team in teams if team['Team #'] in args.teams] if args.
 with open('team_names.json', 'r') as f:
     team_names = json.load(f)
 
+state_teams = {}
 irrelevant = ['Team #', 'Division', 'Location']
 for team in select_teams:
     number = team['Team #']
@@ -57,6 +58,7 @@ for team in select_teams:
                                               value=round(value, 8) if type(value) == float else value))
     # Build list of teams in this state or province to score from.
     # TODO: Improve efficiency.
-    state_teams = [opponent for opponent in teams if opponent['Location'] == team['Location']]
+    if not state_teams.get(team['Location']):
+        state_teams[team['Location']] = [opponent for opponent in teams if opponent['Location'] == team['Location']]
     print('\tWorld Rank: #{rank} of {total} teams'.format(rank=teams.index(team) + 1, total=len(teams)))
-    print('\tState Rank: #{state_rank} of {state_total} teams'.format(state_rank=state_teams.index(team) + 1, state_total=len(state_teams)))
+    print('\tState Rank: #{state_rank} of {state_total} teams'.format(state_rank=state_teams[team['Location']].index(team) + 1, state_total=len(state_teams[team['Location']])))
