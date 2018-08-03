@@ -11,10 +11,10 @@ parser.add_argument('--debug', dest='debug', default=False, action='store_true',
 args = parser.parse_args()
 
 SCORE_PAGE = 'http://www.uscyberpatriot.org/competition/current-competition/scores'
-DEBUG_PAGE = 'http://web.archive.org/web/20180328102148/http://www.uscyberpatriot.org/competition/current-competition/scores'
+DEBUG_PREFIX = 'http://web.archive.org/web/20180328102148/'
 OUTPUT_DIR = '/tmp/'
 
-page = requests.get(DEBUG_PAGE if args.debug else SCORE_PAGE).content
+page = requests.get((DEBUG_PREFIX + SCORE_PAGE) if args.debug else SCORE_PAGE).content
 soup = BeautifulSoup(page, 'html.parser')
 main_list = soup.find('ul', class_='dfwp-column dfwp-list')
 rounds = {
@@ -26,6 +26,8 @@ rounds = {
 chosen_round    = pick(list(rounds.keys()), title='Pick a round to get data on.')[0]
 chosen_division = pick(list(rounds[chosen_round].keys()), title='Pick a division to get data on.')[0]
 uri = rounds[chosen_round][chosen_division]
+if args.debug:
+    uri = uri[len(DEBUG_PREFIX):]
 spreadsheet = OUTPUT_DIR + unquote(uri.split('/')[-1])
 
 print('URI: ' + uri)
