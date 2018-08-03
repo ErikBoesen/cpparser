@@ -58,7 +58,6 @@ for team in select_teams:
             print('\t{title}: {value}'.format(title=field,
                                               value=round(value, 8) if type(value) == float else value))
     # Build list of teams in this state or province to score from.
-    # TODO: Improve efficiency.
     if not state_teams.get(location):
         state_teams[location] = [opponent for opponent in teams if opponent['Location'] == location]
     print('\tWorld Rank: #{rank} of {total} teams'.format(rank=teams.index(team) + 1, total=len(teams)))
