@@ -15,6 +15,8 @@ You may wish to append `--user` to that command to install only for your user ac
 ## `download.py`
 First, users can run `download.py`, either directly with `./download.py`, or through Python, i.e. `python3 download.py`. This program allows the user to choose which round and division's data they wish to query. This program will allow users to skip direct interaction with CyberPatriot's website. Why use a website when you can use the command line?
 
+During the offseason period, CyberPatriot typically removes links to score spreadsheets from the website. If wishing to test the script, you may use the flag `--debug` to fetch a copy of the finishing CyberPatriot X score list through the Wayback Machine.
+
 ## `read.py`
 This script allows for easy command-line reading of CyberPatriot formatted `xlsx` files. It's mainly for debugging, but may be useful for users who wish to read the spreadsheets but don't have or wish to open Excel.
 
