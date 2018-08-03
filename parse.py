@@ -7,8 +7,6 @@ import json
 parser = argparse.ArgumentParser(description='extract important information from CyberPatriot score dumps.')
 parser.add_argument('file', help='name of/path to spreadsheet for parsing (typically in XLSX format)')
 parser.add_argument('--teams', dest='teams', nargs='+', help='names of teams to focus on')
-# TODO: Implement CSV support
-#parser.add_argument('--csv', dest='csv', help='output data in CSV format')
 args = parser.parse_args()
 
 wb = load_workbook(filename=args.file, read_only=True, data_only=True)
