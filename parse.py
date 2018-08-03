@@ -15,6 +15,11 @@ ws = wb.active
 rows = ws.rows
 
 def clean(string: str) -> str:
+    """
+    Trim trailing space from the end of field names.
+
+    Some field headers have spaces appended to the end of the cells.
+    """
     return string[:-1] if string[-1] == ' ' else string
 
 fields = []
@@ -24,7 +29,7 @@ for row in rows:
         if row[0].value == 'Team #':
             # This is the header row
             fields = [clean(cell.value) for cell in row]
-    elif row[0].value is not None:
+    elif row[0].value is not None:  # skip any empty lines, otherwise store this team's data
         teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
 
 # Filter out teams with scores "Withheld" and similar messages.
@@ -47,8 +52,10 @@ for team in select_teams:
     for field in fields:
         if field not in irrelevant:
             value = team.get(field)
+            # Print field and value, truncating floating point number if necessary
             print('\t{title}: {value}'.format(title=field,
                                               value=round(value, 8) if type(value) == float else value))
+    # Build list of teams in this state or province to score from.
     # TODO: Improve efficiency.
     state_teams = [opponent for opponent in teams if opponent['Location'] == team['Location']]
     print('\tWorld Rank: #{rank} of {total} teams'.format(rank=teams.index(team) + 1, total=len(teams)))

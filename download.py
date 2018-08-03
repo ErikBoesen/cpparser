@@ -26,6 +26,7 @@ rounds = {
 chosen_round    = pick(list(rounds.keys()), title='Pick a round to get data on.')[0]
 chosen_division = pick(list(rounds[chosen_round].keys()), title='Pick a division to get data on.')[0]
 uri = rounds[chosen_round][chosen_division]
+# If we're sourcing from the Wayback machine, trim Wayback URL prefixes since it hasn't cached most spreadsheets
 if args.debug:
     uri = uri[len(DEBUG_PREFIX):]
 spreadsheet = OUTPUT_DIR + unquote(uri.split('/')[-1])
