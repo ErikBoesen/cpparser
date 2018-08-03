@@ -48,6 +48,7 @@ irrelevant = ['Team #', 'Division', 'Location']
 for team in select_teams:
     number = team['Team #']
     name = team_names.get(number)
+    location = team['Location']
     print('Team {number}{name}:'.format(number=number,
                                         name=', ' + name if name else ''))
     for field in fields:
@@ -58,7 +59,7 @@ for team in select_teams:
                                               value=round(value, 8) if type(value) == float else value))
     # Build list of teams in this state or province to score from.
     # TODO: Improve efficiency.
-    if not state_teams.get(team['Location']):
-        state_teams[team['Location']] = [opponent for opponent in teams if opponent['Location'] == team['Location']]
+    if not state_teams.get(location):
+        state_teams[location] = [opponent for opponent in teams if opponent['Location'] == location]
     print('\tWorld Rank: #{rank} of {total} teams'.format(rank=teams.index(team) + 1, total=len(teams)))
-    print('\tState Rank: #{state_rank} of {state_total} teams'.format(state_rank=state_teams[team['Location']].index(team) + 1, state_total=len(state_teams[team['Location']])))
+    print('\tState Rank: #{state_rank} of {state_total} teams'.format(state_rank=state_teams[location].index(team) + 1, state_total=len(state_teams[location])))
