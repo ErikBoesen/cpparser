@@ -5,6 +5,7 @@ import argparse
 import json
 
 NUMBER = 'Team'
+SCORE = 'Cumulative'
 
 parser = argparse.ArgumentParser(description='extract important information from CyberPatriot score dumps.')
 parser.add_argument('file', help='name of/path to spreadsheet for parsing (typically in XLSX format)')
@@ -29,15 +30,14 @@ for row in rows:
     if not fields:  # if fields have not yet been determined
         if row[0].value == NUMBER:
             # This is the header row
-            print('This a header')
             fields = [clean(cell.value) for cell in row]
     elif row[0].value is not None:  # skip any empty lines, otherwise store this team's data
         teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
 
 # Filter out teams with scores "Withheld" and similar messages.
-teams = [team for team in teams if type(team['Cumulative Score']) in (int, float)]
+teams = [team for team in teams if type(team[SCORE]) in (int, float)]
 # Sort in order of total score.
-teams.sort(key=lambda team: team['Cumulative Score'], reverse=True)
+teams.sort(key=lambda team: team[SCORE], reverse=True)
 
 # Create a list of teams on which we desire to log data
 select_teams = [team for team in teams if team[NUMBER] in args.teams] if args.teams else teams
