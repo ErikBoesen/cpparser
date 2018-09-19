@@ -21,13 +21,13 @@ def clean(string: str) -> str:
     Some field headers have spaces appended to the end of the cells.
     """
     return string[:-1] if string[-1] == ' ' else string
-
 fields = []
 teams = []
 for row in rows:
     if not fields:  # if fields have not yet been determined
-        if row[0].value == 'Team #':
+        if row[0].value == 'Team':
             # This is the header row
+            print('This a header')
             fields = [clean(cell.value) for cell in row]
     elif row[0].value is not None:  # skip any empty lines, otherwise store this team's data
         teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
@@ -38,15 +38,15 @@ teams = [team for team in teams if type(team['Cumulative Score']) in (int, float
 teams.sort(key=lambda team: team['Cumulative Score'], reverse=True)
 
 # Create a list of teams on which we desire to log data
-select_teams = [team for team in teams if team['Team #'] in args.teams] if args.teams else teams
+select_teams = [team for team in teams if team['Team'] in args.teams] if args.teams else teams
 
 with open('team_names.json', 'r') as f:
     team_names = json.load(f)
 
 state_teams = {}
-irrelevant = ['Team #', 'Division', 'Location']
+irrelevant = ['Team', 'Division', 'Location']
 for team in select_teams:
-    number = team['Team #']
+    number = team['Team']
     name = team_names.get(number)
     location = team['Location']
     print('Team {number}{name}:'.format(number=number,
