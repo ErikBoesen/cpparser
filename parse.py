@@ -4,6 +4,8 @@ from openpyxl import load_workbook
 import argparse
 import json
 
+NUMBER = 'Team'
+
 parser = argparse.ArgumentParser(description='extract important information from CyberPatriot score dumps.')
 parser.add_argument('file', help='name of/path to spreadsheet for parsing (typically in XLSX format)')
 parser.add_argument('--teams', dest='teams', nargs='+', help='names of teams to focus on')
@@ -25,7 +27,7 @@ fields = []
 teams = []
 for row in rows:
     if not fields:  # if fields have not yet been determined
-        if row[0].value == 'Team':
+        if row[0].value == NUMBER:
             # This is the header row
             print('This a header')
             fields = [clean(cell.value) for cell in row]
@@ -38,15 +40,15 @@ teams = [team for team in teams if type(team['Cumulative Score']) in (int, float
 teams.sort(key=lambda team: team['Cumulative Score'], reverse=True)
 
 # Create a list of teams on which we desire to log data
-select_teams = [team for team in teams if team['Team'] in args.teams] if args.teams else teams
+select_teams = [team for team in teams if team[NUMBER] in args.teams] if args.teams else teams
 
 with open('team_names.json', 'r') as f:
     team_names = json.load(f)
 
 state_teams = {}
-irrelevant = ['Team', 'Division', 'Location']
+irrelevant = [NUMBER, 'Division', 'Location']
 for team in select_teams:
-    number = team['Team']
+    number = team[NUMBER]
     name = team_names.get(number)
     location = team['Location']
     print('Team {number}{name}:'.format(number=number,
