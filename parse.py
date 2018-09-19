@@ -57,7 +57,7 @@ for team in select_teams:
         if field not in irrelevant:
             value = team.get(field)
             # Print field and value, truncating floating point number if necessary
-            print('\t{title}: {value}'.format(title=field,
+            print('\t{title}: {value}'.format(title=field.strip(),
                                               value=round(value, 8) if type(value) == float else value))
     # Build list of teams in this state or province to score from.
     if not state_teams.get(location):
