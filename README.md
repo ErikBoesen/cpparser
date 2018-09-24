@@ -38,5 +38,10 @@ python3 parse.py spreadsheet_path.xlsx --teams 10-1018 10-1418 #...
 ```
 You should add all teams on which you wish to get data following `--teams`.
 
+Generally, all teams in a spreadsheet are from the same season of CyberPatriot. Thus, you can use this typical command-line shorthand (equivalent to the above command):
+```sh
+python3 parse.py spreadsheet_path.xlsx --teams 10-{1018,1418}
+```
+
 ## Licensing & Authorship
 This software was created by [Erik Boesen](https://github.com/ErikBoesen) and is provided under the [MIT License](LICENSE).
