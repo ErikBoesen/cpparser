@@ -32,6 +32,8 @@ Team __-____:
 ```
 All fields provided by the spreadsheet will be shown except those specifically excluded. This way, no information will be hidden which ought not be.
 
+Team names may be written into `team_names.json`, the contents of which will be read to add informal team names to each team header.
+
 `parse.py` can be used as shown in the following example:
 ```sh
 python3 parse.py spreadsheet_path.xlsx --teams 10-1018 10-1418 #...
