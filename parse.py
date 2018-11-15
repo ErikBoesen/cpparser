@@ -29,7 +29,7 @@ fields = []
 teams = []
 for row in rows:
     if not fields:  # if fields have not yet been determined
-        if row[0].value in NUMBER_OPTIONS:
+        if row[0].value in NUMBER_COLUMN_OPTIONS:
             number_column = row[0].value
             # This is the header row
             fields = [clean(cell.value) for cell in row]
