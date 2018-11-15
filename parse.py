@@ -30,9 +30,11 @@ teams = []
 for row in rows:
     if not fields:  # if fields have not yet been determined
         if row[0].value in NUMBER_COLUMN_OPTIONS:
-            number_column = row[0].value
-            # This is the header row
+            # This is the header row; make list of numbers
             fields = [clean(cell.value) for cell in row]
+            # Store title of team number column
+            number_column = fields[0]
+            # Store title of total score column
             for field in fields:
                 if field in SCORE_COLUMN_OPTIONS:
                     score_column = field
