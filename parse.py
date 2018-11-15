@@ -4,8 +4,9 @@ from openpyxl import load_workbook
 import argparse
 import json
 
-NUMBER = 'Team'
-SCORE = 'Cumulative'
+# TODO: shouldn't be named as a constant
+NUMBER_COLUMN_OPTIONS = ('Team #', 'Team')
+SCORE_COLUMN_OPTIONS = ('Cumulative Score')
 
 parser = argparse.ArgumentParser(description='extract important information from CyberPatriot score dumps.')
 parser.add_argument('file', help='name of/path to spreadsheet for parsing (typically in XLSX format)')
@@ -28,27 +29,31 @@ fields = []
 teams = []
 for row in rows:
     if not fields:  # if fields have not yet been determined
-        if row[0].value == NUMBER:
+        if row[0].value in NUMBER_OPTIONS:
+            number_column = row[0].value
             # This is the header row
             fields = [clean(cell.value) for cell in row]
+            for field in fields:
+                if field in SCORE_COLUMN_OPTIONS:
+                    score_column = field
     elif row[0].value is not None:  # skip any empty lines, otherwise store this team's data
         teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
 
 # Filter out teams with scores "Withheld" and similar messages.
-teams = [team for team in teams if type(team[SCORE]) in (int, float)]
+teams = [team for team in teams if type(team[score_column]) in (int, float)]
 # Sort in order of total score.
-teams.sort(key=lambda team: team[SCORE], reverse=True)
+teams.sort(key=lambda team: team[score_column], reverse=True)
 
 # Create a list of teams on which we desire to log data
-select_teams = [team for team in teams if team[NUMBER] in args.teams] if args.teams else teams
+select_teams = [team for team in teams if team[number_column] in args.teams] if args.teams else teams
 
 with open('team_names.json', 'r') as f:
     team_names = json.load(f)
 
 state_teams = {}
-irrelevant = [NUMBER, 'Division', 'Location']
+irrelevant = [number_column, 'Division', 'Location']
 for team in select_teams:
-    number = team[NUMBER]
+    number = team[number_column]
     name = team_names.get(number)
     location = team['Location']
     print('Team {number}{name}:'.format(number=number,
