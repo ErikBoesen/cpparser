@@ -44,6 +44,7 @@ for row in rows:
             teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
 
 # Filter out teams with scores "Withheld" and similar messages.
+teams = [team for team in teams if team.get(score_column) is not None and type(team[score_column]) in (int, float)]
 # Sort in order of total score.
 teams.sort(key=lambda team: team[score_column], reverse=True)
 
