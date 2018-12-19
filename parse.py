@@ -24,25 +24,26 @@ def clean(string: str) -> str:
 
     Some field headers have spaces appended to the end of the cells.
     """
-    return string[:-1] if string[-1] == ' ' else string
+    return string.strip()
 fields = []
 teams = []
 for row in rows:
-    if not fields:  # if fields have not yet been determined
-        if row[0].value in NUMBER_COLUMN_OPTIONS:
-            # This is the header row; make list of numbers
-            fields = [clean(cell.value) for cell in row]
-            # Store title of team number column
-            number_column = fields[0]
-            # Store title of total score column
-            for field in fields:
-                if field in SCORE_COLUMN_OPTIONS:
-                    score_column = field
-    elif row[0].value is not None:  # skip any empty lines, otherwise store this team's data
-        teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
+    row = [cell for cell in row if cell.value is not None]
+    if row:
+        if not fields:  # if fields have not yet been determined
+            if row[0].value in NUMBER_COLUMN_OPTIONS:
+                # This is the header row; make list of numbers
+                fields = [clean(cell.value) for cell in row if cell.value is not None]
+                # Store title of team number column
+                number_column = fields[0]
+                # Store title of total score column
+                for field in fields:
+                    if field in SCORE_COLUMN_OPTIONS:
+                        score_column = field
+        elif row[0].value is not None:  # skip any empty lines, otherwise store this team's data
+            teams.append({fields[col]: cell.value for col, cell in enumerate(row)})
 
 # Filter out teams with scores "Withheld" and similar messages.
-teams = [team for team in teams if type(team[score_column]) in (int, float)]
 # Sort in order of total score.
 teams.sort(key=lambda team: team[score_column], reverse=True)
 
